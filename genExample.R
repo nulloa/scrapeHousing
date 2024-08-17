@@ -6,9 +6,9 @@ library(RSelenium)
 
 ##### Get Data #####
 # This set of code tells me the number of search pages to make the code general as possible
-zillow_url <- "https://www.zillow.com/chula-vista-ca/sold/house,townhouse_type/?searchQueryState=%7B%22pagination%22%3A%7B%7D%2C%22usersSearchTerm%22%3A%22Chula%20Vista%2C%20CA%22%2C%22mapBounds%22%3A%7B%22west%22%3A-117.14297635009765%2C%22east%22%3A-116.90608364990234%2C%22south%22%3A32.55339406311664%2C%22north%22%3A32.71010272519207%7D%2C%22regionSelection%22%3A%5B%7B%22regionId%22%3A51405%2C%22regionType%22%3A6%7D%5D%2C%22isMapVisible%22%3Atrue%2C%22filterState%22%3A%7B%22sort%22%3A%7B%22value%22%3A%22days%22%7D%2C%22ah%22%3A%7B%22value%22%3Atrue%7D%2C%22mf%22%3A%7B%22value%22%3Afalse%7D%2C%22con%22%3A%7B%22value%22%3Afalse%7D%2C%22land%22%3A%7B%22value%22%3Afalse%7D%2C%22apa%22%3A%7B%22value%22%3Afalse%7D%2C%22manu%22%3A%7B%22value%22%3Afalse%7D%2C%22apco%22%3A%7B%22value%22%3Afalse%7D%2C%22rs%22%3A%7B%22value%22%3Atrue%7D%2C%22fsba%22%3A%7B%22value%22%3Afalse%7D%2C%22nc%22%3A%7B%22value%22%3Afalse%7D%2C%22cmsn%22%3A%7B%22value%22%3Afalse%7D%2C%22fore%22%3A%7B%22value%22%3Afalse%7D%7D%2C%22isListVisible%22%3Atrue%2C%22mapZoom%22%3A12%7D"
+zillow_url <- "https://www.zillow.com/homes/Chula%20Vista,-CA_rb/house_type/3-_beds/2_p/"
 
-numberoftiles =40 # This is the number of tiles of listings that show up on Zillow. 
+numberoftiles = 40 # This is the number of tiles of listings that show up on Zillow. 
 
 zillow_pg <- read_html(zillow_url)
 
@@ -21,7 +21,7 @@ zillow_pg_cnt = ceiling(zillow_cnt /numberoftiles)
 ## Now to construct a dataframe to loop over the number of search pages. 
 res_all <- NULL
 for (i in 1:zillow_pg_cnt) {
-  pg <- read_html(str_c('https://www.zillow.com/chula-vista-ca/sold/house,townhouse_type/', i, '_p/?searchQueryState=%7B%22pagination%22%3A%7B%22currentPage%22%3A2%7D%2C%22usersSearchTerm%22%3A%22Chula%20Vista%2C%20CA%22%2C%22mapBounds%22%3A%7B%22west%22%3A-117.14297635009765%2C%22east%22%3A-116.90608364990234%2C%22south%22%3A32.55339406311664%2C%22north%22%3A32.71010272519207%7D%2C%22regionSelection%22%3A%5B%7B%22regionId%22%3A51405%2C%22regionType%22%3A6%7D%5D%2C%22isMapVisible%22%3Atrue%2C%22filterState%22%3A%7B%22sort%22%3A%7B%22value%22%3A%22days%22%7D%2C%22ah%22%3A%7B%22value%22%3Atrue%7D%2C%22mf%22%3A%7B%22value%22%3Afalse%7D%2C%22con%22%3A%7B%22value%22%3Afalse%7D%2C%22land%22%3A%7B%22value%22%3Afalse%7D%2C%22apa%22%3A%7B%22value%22%3Afalse%7D%2C%22manu%22%3A%7B%22value%22%3Afalse%7D%2C%22apco%22%3A%7B%22value%22%3Afalse%7D%2C%22rs%22%3A%7B%22value%22%3Atrue%7D%2C%22fsba%22%3A%7B%22value%22%3Afalse%7D%2C%22nc%22%3A%7B%22value%22%3Afalse%7D%2C%22cmsn%22%3A%7B%22value%22%3Afalse%7D%2C%22fore%22%3A%7B%22value%22%3Afalse%7D%7D%2C%22isListVisible%22%3Atrue%2C%22mapZoom%22%3A12%7D'))
+  pg <- read_html(str_c('https://www.zillow.com/homes/Chula%20Vista,-CA_rb/house_type/3-_beds/', i, '_p/'))
   res_pg <- tibble(
     address= pg %>% html_nodes(".list-card-info a") %>% html_text(),
     pricelisted = pg %>% html_nodes(".list-card-price") %>% html_text(),
